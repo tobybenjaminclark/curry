@@ -53,4 +53,5 @@ record Salad : Set where
     ch2 : isChopped e₂
 
 f : (e₁ : Tomato) → (e₂ : Parsnip) → Tomato.e₁ e₁ ≠ Parsnip.e₁ e₂ → Salad
-f = {!   !}
+
+f = λ e₁ e₂ z → {!   !}

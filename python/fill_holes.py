@@ -85,8 +85,7 @@ def fill_hole(file_name, hole_id, agda_process):
     auto_fill_command = f'IOTCM "{file_name}" None Direct (Cmd_autoOne Simplified {hole_id} noRange " -m " )'
     return run_fill_command(auto_fill_command, agda_process)
 
-def main():
-    file_name = "calculus/test_one.agda"
+def get_holes(file_name):
     agda_process = start_agda()
     
     load_command = f'IOTCM "{file_name}" None Direct (Cmd_load "{file_name}" [])'
@@ -98,15 +97,17 @@ def main():
         print("No holes found.")
         return
     
-    for hole_id in hole_ids:
-        fill_response = fill_hole(file_name, hole_id, agda_process)
-        print("\nFilled Hole Response:")
-        print(fill_response)
+    filled_holes = [fill_hole(file_name, hole_id, agda_process) for hole_id in hole_ids]
     
     agda_process.stdin.close()
     agda_process.stdout.close()
     agda_process.stderr.close()
     agda_process.wait()
 
+    return filled_holes
+
+
 if __name__ == "__main__":
-    main()
+    file_name = "calculus/test_one.agda"
+    holes = get_holes(file_name)
+    print(f"HOLES: {holes}")

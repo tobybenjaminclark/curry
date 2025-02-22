@@ -1,1 +1,2 @@
-Cake : Flour & Milk & Egg & BakingPowder
+CakeMix : Flour ; Milk ; Egg ; BakingPowder
+Cake : CakeMix , Baked ;

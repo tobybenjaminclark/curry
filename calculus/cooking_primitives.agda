@@ -6,14 +6,18 @@ postulate
 
   isEgg : Entity → Set
   isFlour : Entity → Set
-  isCheese : Entity → Set
   isBakingPowder : Entity → Set
-  isRiceFlour : Entity → Set
   isMilk : Entity → Set
   isOatMilk : Entity → Set
+  isCakeMix : Entity → Set
+  isCakeBatter : Entity → Set
 
-  RiceFlourToFlour : ∀ (e : Entity) → isRiceFlour e → isFlour e
   OatMilkToMilk : ∀ (e : Entity) → isOatMilk e → isMilk e
+
+
+  isBaked : Entity → Set
+  Bake : ∀ (e : Entity) → isBaked e
+
 
 record Egg : Set where
   constructor mkEgg
@@ -27,23 +31,11 @@ record Flour : Set where
     e₁            : Entity
     proofFlour      : isFlour e₁
 
-record Cheese : Set where
-  constructor mkCheese
-  field
-    e₁            : Entity
-    proofCheese      : isCheese e₁
-
 record BakingPowder : Set where
   constructor mkBakingPowder
   field
     e₁            : Entity
     proofBakingPowder      : isBakingPowder e₁
-
-record RiceFlour : Set where
-  constructor mkRiceFlour
-  field
-    e₁            : Entity
-    proofRiceFlour      : isRiceFlour e₁
 
 record Milk : Set where
   constructor mkMilk
@@ -58,23 +50,19 @@ record OatMilk : Set where
     proofOatMilk      : isOatMilk e₁
 
 
+record CakeBatter : Set where
+  constructor mkCakeBatter
+  field
+    e1  :   Entity
+    proofCakeBatter : isCakeBatter e1
+
 record Cake : Set where
   constructor mkCake
   field
     e1  :   Entity
-    e2  :   Entity
-    e3  :   Entity
-    e4  :   Entity
+    
+    ca1  :   isCakeMix e1
+    ba1  :   isBaked e1
 
-    p1  :   isFlour e1
-    p2  :   isMilk e2
-    p3  :   isEgg e3
-    p4  :   isBakingPowder e4
-
-
-f2 : OatMilk → Egg → Flour → BakingPowder → Cake
-f2 = λ z z₁ z₂ z₃ →
-    mkCake (z₂ .Flour.e₁) (z .OatMilk.e₁) (z₁ .Egg.e₁)
-    (z₃ .BakingPowder.e₁) (z₂ .Flour.proofFlour)
-    (OatMilkToMilk (z .OatMilk.e₁) (z .OatMilk.proofOatMilk))
-    (z₁ .Egg.proofEgg) (z₃ .BakingPowder.proofBakingPowder)
+f : Milk → Flour → BakingPowder → Egg → Cake
+f = {!   !}

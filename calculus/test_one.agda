@@ -53,9 +53,4 @@ record Salad : Set where
     ch2 : isChopped e₂
 
 f : (e₁ : Tomato) → (e₂ : Parsnip) → Tomato.e₁ e₁ ≠ Parsnip.e₁ e₂ → Salad
-f = λ e₁ e₂ z →
-    mkSalad (e₁ .Tomato.e₁) (e₂ .Parsnip.e₁)
-    (tomatoProofIsVegProof (e₁ .Tomato.e₁) (e₁ .Tomato.proofTomato))
-    (parsnipProofIsVegProof (e₂ .Parsnip.e₁)
-     (e₂ .Parsnip.proofParsnip))
-    z (Chop (e₁ .Tomato.e₁)) (Chop (e₂ .Parsnip.e₁))
+f = {!   !}

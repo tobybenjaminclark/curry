@@ -11,8 +11,7 @@ postulate
   isVegetable    : Entity → Set
 
   isChopped      : Entity → Set
-
-  Chop                       : ∀ (e : Entity) → isChopped e
+  Chop           : ∀ (e : Entity) → isChopped e
 
   tomatoProofIsVegProof      : ∀ (e : Entity) → isTomato e → isVegetable e
   carrotProofIsVegProof      : ∀ (e : Entity) → isCarrot e → isVegetable e
@@ -47,10 +46,10 @@ record Salad : Set where
     ve1 : isVegetable e₁
     ve2 : isVegetable e₂
 
-    distinct : e₁ ≠ e₂
-
     ch1 : isChopped e₁
     ch2 : isChopped e₂
+
+        distinct : e₁ ≠ e₂
 
 f : (e₁ : Tomato) → (e₂ : Parsnip) → Tomato.e₁ e₁ ≠ Parsnip.e₁ e₂ → Salad
 

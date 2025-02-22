@@ -3,6 +3,7 @@ from typing import List, Union
 
 from fill_holes import get_holes
 from Expression import *
+from Parser import Parser
 
 def tokenize(hole_str: str):
     tokens = re.findall(r'[λa-zA-Z₁₂₃₄₅₆₇₈₉₀]+(?:\.[a-zA-Z₁₂₃₄₅₆₇₈₉₀]+)*|\(|\)|→', hole_str)
@@ -17,3 +18,8 @@ if __name__ == "__main__":
         print(f"ORIGINAL STRING: {hole}")
         tokens = tokenize(hole)
         print(f"TOKENS: {tokens}")
+        parser = Parser(tokens)
+        ast = parser.parse()
+        print(ast)
+
+        # git revert ~HEAD-1

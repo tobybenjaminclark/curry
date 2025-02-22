@@ -1,60 +1,61 @@
-
 module test_one where
     
 open import Agda.Builtin.Equality
 open import Data.Empty
 
-
-
-
-{- Entity : Set -}
 postulate
   Entity         : Set
   isTomato       : Entity → Set
-  isParsnip       : Entity → Set
+  isParsnip      : Entity → Set
   isCarrot       : Entity → Set
   isVegetable    : Entity → Set
 
+  isChopped      : Entity → Set
+
+  Chop                       : ∀ (e : Entity) → isChopped e
+
   tomatoProofIsVegProof      : ∀ (e : Entity) → isTomato e → isVegetable e
   carrotProofIsVegProof      : ∀ (e : Entity) → isCarrot e → isVegetable e
-  parsnipProofIsParsnipProof : ∀ (e : Entity) → isParsnip e → isVegetable e
+  parsnipProofIsVegProof     : ∀ (e : Entity) → isParsnip e → isVegetable e
 
   _≠_ : Entity → Entity → Set
 
 record Tomato : Set where
   constructor mkTomato
   field
-    e₁            : Entity
-    proofTomato   : isTomato e₁
+    e₁           : Entity
+    proofTomato  : isTomato e₁
 
 record Parsnip : Set where
   constructor mkParsnip
   field
-    e₁            : Entity
-    proofParsnip  : isParsnip e₁
+    e₁           : Entity
+    proofParsnip : isParsnip e₁
 
 record Vegetable : Set where
   constructor mkVegetable
   field
-    e₁            : Entity
-    proofVegeta   : isVegetable e₁
-
+    e₁             : Entity
+    proofVegetable : isVegetable e₁
 
 record Salad : Set where
-    constructor mkSalad
-    field
-        e₁  :   Vegetable
-        e₂  :   Vegetable
-        distinct : Vegetable.e₁ e₁ ≠ Vegetable.e₁ e₂
+  constructor mkSalad
+  field
+    e₁  : Entity
+    e₂  : Entity
 
+    ve1 : isVegetable e₁
+    ve2 : isVegetable e₂
 
+    distinct : e₁ ≠ e₂
+
+    ch1 : isChopped e₁
+    ch2 : isChopped e₂
 
 f : (e₁ : Tomato) → (e₂ : Parsnip) → Tomato.e₁ e₁ ≠ Parsnip.e₁ e₂ → Salad
 f = λ e₁ e₂ z →
-    mkSalad
-    (mkVegetable (Tomato.e₁ e₁)
-     (tomatoProofIsVegProof (Tomato.e₁ e₁) (e₁ .Tomato.proofTomato)))
-    (mkVegetable (Parsnip.e₁ e₂)
-     (parsnipProofIsParsnipProof (Parsnip.e₁ e₂)
-      (e₂ .Parsnip.proofParsnip)))
-    z
+    mkSalad (e₁ .Tomato.e₁) (e₂ .Parsnip.e₁)
+    (tomatoProofIsVegProof (e₁ .Tomato.e₁) (e₁ .Tomato.proofTomato))
+    (parsnipProofIsVegProof (e₂ .Parsnip.e₁)
+     (e₂ .Parsnip.proofParsnip))
+    z (Chop (e₁ .Tomato.e₁)) (Chop (e₂ .Parsnip.e₁))

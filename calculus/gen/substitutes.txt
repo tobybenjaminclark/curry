@@ -1,1 +1,3 @@
 OatMilk → Milk
+Tomato → Vegetable
+Parsnip → Vegetable

@@ -1,2 +1,3 @@
 CakeMix : Flour ; Milk ; Egg ; BakingPowder
 Cake : CakeMix , Baked ;
+Salad : Vegetable , Chopped ; Vegetable , Chopped ;
